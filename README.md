@@ -1,6 +1,6 @@
 # gd-taglib
 
-Experimental module for the [Godot Engine](https://github.com/godotengine/godot) to add read-only support for most common audio file tags. Implements [Taglib](https://taglib.org/). Tested to work on Godot 3.1 and 3.2 alpha. Could be useful for any game allowing user-supplied music files.
+Experimental module for the [Godot Engine](https://github.com/godotengine/godot) to add read-only support for most common audio file tags, including album art support for MP3 and FLAC. Implements [Taglib](https://taglib.org/). Tested to work on Godot 3.1 and 3.2 alpha. Could be useful for any game allowing user-supplied music files.
 
 ## Installation
 Like with any other Godot module, you'll have to compile the engine yourself. Put everything from the modules and thirdparty folders into the respective folders in the Godot source directory, then compile follow the [compilation instructions](https://docs.godotengine.org/en/latest/development/compiling/) for your platform.
