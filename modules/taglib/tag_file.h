@@ -35,7 +35,6 @@
 #include "core/os/file_access.h"
 #include "core/image.h"
 #include "core/bind/core_bind.h"
-//#include "tag_accessor.h"
 #include <taglib.h>
 #include <fileref.h>
 #include <tag.h>
@@ -55,9 +54,6 @@ class TagFile : public Reference {
 	GDCLASS(TagFile, Reference);
 
 	TagLib::IOStream *_stream;
-
-	//could actually have a struct containing all the info that gets populated on open
-	//then, no need to keep stream in memory?
 	
 
 protected:

@@ -26,24 +26,17 @@ void TagFile::open_path_absolute(const String &path){
 	else if(ext == "FLAC"){
 		//create flac tag accessor
 		tags = memnew(TagAccessorFLAC());
-		//print_line("created flac accessor for " + path);
 		
 	}
 
 	else{
 		//create generic file accessor
 		tags = memnew(TagAccessorGeneric());
-		//print_line("created generic accessor for " + path);
 	}
 
 	if(tags){
 		tags->open_bytes(_stream);
 	}
-
-		//f.close();
-	//}
-
-	//memdelete(f);
 	
 }
 
@@ -61,18 +54,15 @@ void TagFile::open_bytes(const PoolByteArray &bytes){
 	//here, check if any of the special supported types (needed for album art support)
 
 	if(TagLib::MPEG::File::isSupported(_stream)){
-		// create mpeg tag accessor
 		tags = memnew(TagAccessorMPEG());
 	}
 
 	else if(TagLib::FLAC::File::isSupported(_stream)){
-		//create flac tag accessor
 		tags = memnew(TagAccessorFLAC());
 		
 	}
 
 	else{
-		//create generic file accessor
 		tags = memnew(TagAccessorGeneric());
 	}
 
@@ -184,7 +174,7 @@ int TagFile::get_length_in_ms(){
 void TagFile::_bind_methods(){
 	ClassDB::bind_method(D_METHOD("open_path_absolute", "path"), &TagFile::open_path_absolute);
 	//ClassDB::bind_method(D_METHOD("open_bytes", "bytes"), &TagFile::open_bytes);
-	ClassDB::bind_method(D_METHOD("open_file", "file"), &TagFile::open_file);
+	//ClassDB::bind_method(D_METHOD("open_file", "file"), &TagFile::open_file);
 
 	ClassDB::bind_method(D_METHOD("close"), &TagFile::close);
 
@@ -219,7 +209,6 @@ void TagFile::_bind_methods(){
 }
 
 TagFile::TagFile(){
-	//file = NULL;
 	_stream = NULL;
 	tags = NULL;
 }
