@@ -38,7 +38,7 @@ String TagAccessor::get_title() const{
 
 String TagAccessor::get_title_sort() const{
 	if(get_file() && get_file()->isValid()){
-		return get_file()->properties().contains("TITLESORT") ? to_godot_string(get_file()->properties()["TITLESORT"].toString()) : get_title();
+		return get_file()->properties().contains("TITLESORT") ? to_godot_string(get_file()->properties()["TITLESORT"][0]) : get_title();
 	}
 	return "";
 }
@@ -52,21 +52,21 @@ String TagAccessor::get_artist() const{
 
 String TagAccessor::get_artist_sort() const{
 	if(get_file() && get_file()->isValid()){
-		return get_file()->properties().contains("ARTISTSORT") ? to_godot_string(get_file()->properties()["ARTISTSORT"].toString()) : get_artist();
+		return get_file()->properties().contains("ARTISTSORT") ? to_godot_string(get_file()->properties()["ARTISTSORT"][0]) : get_artist();
 	}
 	return "";
 }
 
 String TagAccessor::get_album_artist() const{
 	if(get_file() && get_file()->isValid()){
-		return get_file()->properties().contains("ALBUMARTIST") ? to_godot_string(get_file()->properties()["ALBUMARTIST"].toString()) : get_artist();
+		return get_file()->properties().contains("ALBUMARTIST") ? to_godot_string(get_file()->properties()["ALBUMARTIST"][0]) : get_artist();
 	}
 	return "";
 }
 
 String TagAccessor::get_album_artist_sort() const{
 	if(get_file() && get_file()->isValid()){
-		return get_file()->properties().contains("ALBUMARTISTSORT") ? to_godot_string(get_file()->properties()["ALBUMARTISTSORT"].toString()) : get_album_artist();
+		return get_file()->properties().contains("ALBUMARTISTSORT") ? to_godot_string(get_file()->properties()["ALBUMARTISTSORT"][0]) : get_album_artist();
 	}
 	return "";
 }
@@ -80,7 +80,7 @@ String TagAccessor::get_album() const{
 
 String TagAccessor::get_album_sort() const{
 	if(get_file() && get_file()->isValid()){
-		return get_file()->properties().contains("ALBUMSORT") ? to_godot_string(get_file()->properties()["ALBUMSORT"].toString()) : get_album();
+		return get_file()->properties().contains("ALBUMSORT") ? to_godot_string(get_file()->properties()["ALBUMSORT"][0]) : get_album();
 	}
 	return "";
 }
@@ -113,7 +113,7 @@ int TagAccessor::get_total_tracks() const{
 		}
 		else if(get_file()->properties().contains("TRACKNUMBER")){
 			//likely string separated w/slash
-			TagLib::StringList sl = get_file()->properties()["TRACKNUMBER"].toString().split("/");
+			TagLib::StringList sl = get_file()->properties()["TRACKNUMBER"][0].split("/");
 			if(sl.size()>=2){
 				return sl[1].toInt();
 			}
@@ -125,7 +125,7 @@ int TagAccessor::get_total_tracks() const{
 int TagAccessor::get_disc() const{
 	if(get_file() && get_file()->isValid()){
 		if(get_file()->properties().contains("DISCNUMBER")){
-			return get_file()->properties()["DISCNUMBER"].toString().toInt();
+			return get_file()->properties()["DISCNUMBER"][0].toInt();
 		}
 	}
 	return 0;
@@ -138,7 +138,7 @@ int TagAccessor::get_total_discs() const{
 		}
 		else if(get_file()->properties().contains("DISCNUMBER")){
 			//likely string separated w/slash
-			TagLib::StringList sl = get_file()->properties()["DISCNUMBER"].toString().split("/");
+			TagLib::StringList sl = get_file()->properties()["DISCNUMBER"][0].split("/");
 			if(sl.size()>=2){
 				return sl[1].toInt();
 			}

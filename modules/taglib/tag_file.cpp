@@ -1,14 +1,17 @@
 #include "tag_file.h"
+#include "core/project_settings.h"
 
-void TagFile::open_path_absolute(const String &path){
+void TagFile::open_path(const String &path){
 	close();
+
+	String absolute_path = ProjectSettings::get_singleton()->globalize_path(path.strip_edges());
 
 	//
 #ifdef _WIN32
 	//windows handles strings differently
-	_stream = memnew(TagLib::FileStream(TagLib::FileName(path.c_str()), true));
+	_stream = memnew(TagLib::FileStream(TagLib::FileName(absolute_path.c_str()), true));
 #else
-	_stream = memnew(TagLib::FileStream(path.utf8().get_data(), true));
+	_stream = memnew(TagLib::FileStream(absolute_path.utf8().get_data(), true));
 #endif
 
 	//here, check if any of the special supported types (needed for album art support)
@@ -19,7 +22,6 @@ void TagFile::open_path_absolute(const String &path){
 		// create mpeg tag accessor
 		
 		tags = memnew(TagAccessorMPEG());
-		//print_line("created mpeg accessor for " + path);
 	}
 
 	//else if(TagLib::FLAC::File::isSupported(_stream)){
@@ -39,14 +41,16 @@ void TagFile::open_path_absolute(const String &path){
 	}
 	
 }
-
+/*
 void TagFile::open_file(Ref<_File> file){
 	//close();
 	if(file->is_open()){
 		open_path_absolute(file->get_path_absolute());
 	}
 }
+*/
 
+/*
 void TagFile::open_bytes(const PoolByteArray &bytes){
 	PoolByteArray::Read r = bytes.read();
 	_stream = memnew(TagLib::ByteVectorStream(TagLib::ByteVector((const char*)r.ptr(), bytes.size())));
@@ -54,15 +58,18 @@ void TagFile::open_bytes(const PoolByteArray &bytes){
 	//here, check if any of the special supported types (needed for album art support)
 
 	if(TagLib::MPEG::File::isSupported(_stream)){
+		// create mpeg tag accessor
 		tags = memnew(TagAccessorMPEG());
 	}
 
 	else if(TagLib::FLAC::File::isSupported(_stream)){
+		//create flac tag accessor
 		tags = memnew(TagAccessorFLAC());
 		
 	}
 
 	else{
+		//create generic file accessor
 		tags = memnew(TagAccessorGeneric());
 	}
 
@@ -70,6 +77,7 @@ void TagFile::open_bytes(const PoolByteArray &bytes){
 		tags->open_bytes(_stream);
 	}
 }
+*/
 
 void TagFile::close(){
 	if(tags){
@@ -172,7 +180,7 @@ int TagFile::get_length_in_ms(){
 }
 
 void TagFile::_bind_methods(){
-	ClassDB::bind_method(D_METHOD("open_path_absolute", "path"), &TagFile::open_path_absolute);
+	ClassDB::bind_method(D_METHOD("open_path", "path"), &TagFile::open_path);
 	//ClassDB::bind_method(D_METHOD("open_bytes", "bytes"), &TagFile::open_bytes);
 	//ClassDB::bind_method(D_METHOD("open_file", "file"), &TagFile::open_file);
 
@@ -209,6 +217,7 @@ void TagFile::_bind_methods(){
 }
 
 TagFile::TagFile(){
+	//file = NULL;
 	_stream = NULL;
 	tags = NULL;
 }

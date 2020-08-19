@@ -48,8 +48,4 @@ env_thirdparty.Append(CXXFLAGS=['-DTAGLIB_STATIC'])
 
 env_taglib.add_source_files(env.modules_sources, "*.cpp")
 
-#env_taglib.ParseConfig('pkg-config --cflags --libs taglib')
 env_taglib.Append(CXXFLAGS=['-DTAGLIB_STATIC'])
-
-# needed so it actually gets linked
-#env.ParseConfig('pkg-config --libs taglib')
